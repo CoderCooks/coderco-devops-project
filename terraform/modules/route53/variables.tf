@@ -1,0 +1,1 @@
+//Variables for the Route53 module
