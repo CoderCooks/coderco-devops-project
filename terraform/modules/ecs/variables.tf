@@ -1,31 +1,63 @@
-//Variables for the ECS module
-variable "ecs_cluster_name" {
-  description = "The name of the ECS cluster"
+variable "project_name" {
+  description = "The name of the project"
   type        = string
+  default     = "codercooks"
+  
 }
-variable "ecs_service_name" {
-  description = "The name of the ECS service"
-  type        = string
+
+variable "ecr_repo_name" {
+    description = "The name of the ECR repository"
 }
-variable "ecs_task_definition" {
-  description = "The task definition for the ECS service"
-  type        = string
+
+variable "allowed_cidr_blocks" {
+    description = "CIDR blocks allowed for the security groups"
+    default = ["0.0.0.0/0"]
 }
-variable "ecs_task_role_arn" {
-  description = "The ARN of the IAM role that the ECS task can assume"
-  type        = string
+
+
+variable "ecs_task_cpu" {
+  description = "CPU units for ECS task"
+  type        = number
+  default     = 1024
 }
-variable "ecs_execution_role_arn" {
-  description = "The ARN of the IAM role that the ECS task can assume for execution"
-  type        = string
+
+variable "ecs_task_memory" {
+  description = "Memory (in MiB) for ECS task"
+  type        = number
+  default     = 3072
 }
-variable "ecs_network_mode" {
-  description = "The network mode to use for the ECS task"
+variable "operating_system_family" {
+  description = "The operating system family"
   type        = string
-  default     = "awsvpc"
+  default     = "LINUX"
 }
-variable "ecs_cpu" {
-  description = "The number of CPU units to use for the ECS task"
+
+variable "cpu_architecture" {
+  description = "The CPU architecture"
   type        = string
-  default     = "256"
-}           
+  default     = "X86_64"
+}
+
+variable "subnets" {
+    description = "The subnets for the Load balancer"
+    type        = list(string)
+  
+}
+
+variable "alb_security_group" {
+  description = "The security group of the Load Balancer"
+  type        = string
+  
+}
+
+variable "target_group_arn" {
+  description = "The target group for the load balancer and ECS Service"
+  type        = string
+  
+}
+
+variable "vpc_id" {
+  description = "The VPC for the ECS Security group"
+  type        = string
+  
+}
