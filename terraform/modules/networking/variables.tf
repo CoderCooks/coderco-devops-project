@@ -42,8 +42,8 @@ variable "tags" {
   type        = map(string)
 
 }
-variable "enable_vpn_gateway" {
-  description = "to create a VPN Gateway"
-  type        = bool
+# variable "enable_vpn_gateway" {
+#   description = "to create a VPN Gateway"
+#   type        = bool
 
-}
+# }

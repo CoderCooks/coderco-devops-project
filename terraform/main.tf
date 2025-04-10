@@ -13,13 +13,22 @@ module "networking" {
 }
 
 module "ecs" {
-    source = "../modules/ecs"
-    
+    source = "./modules/ecs"
+    subnets = module.networking.private_subnets
+    vpc_id = module.networking.vpc_id
+    alb_security_group = module.alb.alb_security_group
+    target_group_arn = module.alb.target_group_arn
+
   
 }
 
 module "alb" {
-    source = "../modules/alb"
+    source = "./modules/alb"
+    subnet_ids = module.networking.public_subnets
+    alb_name = var.alb_name
+    vpc_id = module.networking.vpc_id
+    certificate_arn = var.certificate_arn
+    
   
 }
 

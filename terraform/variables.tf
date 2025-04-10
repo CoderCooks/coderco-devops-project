@@ -37,3 +37,24 @@ variable "tags" {
   description = "Map of tags to apply to resources"
   type        = map(string)
 }
+
+
+//ALB
+
+variable "vpc_id" {
+  type        = string
+  description = "ID of the VPC"
+}
+
+
+variable "alb_name" {
+  description = "The alb name"
+  type        = string
+  
+}
+
+
+variable "certificate_arn" {
+  type        = string
+  description = "ARN of the ACM certificate to use for HTTPS"
+}

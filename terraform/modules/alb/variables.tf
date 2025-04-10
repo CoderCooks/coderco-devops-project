@@ -20,10 +20,10 @@ variable "subnet_ids" {
 
 # Security group IDs for the ALB
 
-variable "security_groups" {
-  type        = list(string)
-  description = "List of security group IDs for the ALB"
-}
+# variable "security_groups" {
+#   type        = list(string)
+#   description = "List of security group IDs for the ALB"
+# }
 
 # ACM Certificate ARN for HTTPS listener
 
