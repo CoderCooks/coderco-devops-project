@@ -5,8 +5,8 @@
 on: workflow_dispatch
 
 env:
-  AWS_REGION: MY_AWS_REGION # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: MY_ECR_REPOSITORY # set this to your Amazon ECR repository name
+  AWS_REGION: eu-west-2 # set this to your preferred AWS region, e.g. us-west-1
+  ECR_REPOSITORY: coderco-app # set this to your Amazon ECR repository name
 
 jobs:
   deploy:
