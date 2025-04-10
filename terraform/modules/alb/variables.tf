@@ -39,3 +39,10 @@ variable "health_check_path" {
   default     = "/"
   description = "Path used for health checks in the target group"
 }
+
+variable "tags" {
+  description = "Tags to apply to the ALB and target group"
+  type        = map(string)
+  default     = {}
+  
+}
