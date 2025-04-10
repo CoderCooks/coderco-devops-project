@@ -7,6 +7,7 @@ module "networking" {
 
 module "ecs" {
     source = "../modules/ecs"
+    
   
 }
 
