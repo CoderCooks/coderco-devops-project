@@ -1,3 +1,9 @@
+variable "domain_name" {
+  description = "The base domain name for the hosted zone"
+  type        = string
+  
+}
+
 variable "alb_name" {
   description = "The alb name"
   type        = string

@@ -12,6 +12,4 @@ terraform {
 
 provider "aws" {
   region = "eu-west-2"
-  # Avoid hardcoding access keys in code!
-  # Use environment variables or AWS credentials file
 }
