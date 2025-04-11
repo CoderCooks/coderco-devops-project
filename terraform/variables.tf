@@ -23,15 +23,15 @@ variable "private_subnets" {
   type        = list(string)
 }
 
-variable "enable_nat_gateway" {
-  description = "Enable NAT Gateway(s) for private subnet internet access"
-  type        = bool
-}
+# variable "enable_nat_gateway" {
+#   description = "Enable NAT Gateway(s) for private subnet internet access"
+#   type        = bool
+# }
 
-variable "enable_vpn_gateway" {
-  description = "Enable a VPN Gateway"
-  type        = bool
-}
+# variable "enable_vpn_gateway" {
+#   description = "Enable a VPN Gateway"
+#   type        = bool
+# }
 
 variable "tags" {
   description = "Map of tags to apply to resources"
@@ -41,20 +41,23 @@ variable "tags" {
 
 //ALB
 
-variable "vpc_id" {
-  type        = string
-  description = "ID of the VPC"
-}
-
-
 variable "alb_name" {
   description = "The alb name"
+  type        = string
+
+}
+
+variable "domain_name" {
+  description = "The base domain name for the hosted zone"
   type        = string
   
 }
 
-
 variable "certificate_arn" {
   type        = string
   description = "ARN of the ACM certificate to use for HTTPS"
+}
+variable "record_name" {
+  description = "The base domain name for the hosted zone"
+  type        = string
 }

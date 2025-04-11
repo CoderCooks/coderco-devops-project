@@ -1,14 +1,12 @@
 //Variables for the Route53 module
-variable "domain_name" {
-  description = "The base domain name for the hosted zone"
-  type        = string
-  default     = "cokercooks.com"  # domain
-}
+# variable "domain_name" {
+#   description = "The base domain name for the hosted zone"
+#   type        = string
+# }
 
 variable "alb_dns_name" {
   description = "The DNS name of the Application Load Balancer"
   type        = string
-  default     = "null" 
 }
 
 variable "record_type" {
@@ -21,8 +19,19 @@ variable "record_type" {
   }
 }
 
-variable "alb_zone_id" {
-  description = "The hosted zone ID for the ALB"
+variable "record_name" {
+  description = "The name of the DNS record to create"
   type        = string
-  default     = "ZHURV8PSTC4K8"
+  
+}
+# variable "alb_zone_id" {
+#   description = "The hosted zone ID for the ALB"
+#   type        = string
+# }
+
+
+variable "domain_name" {
+  description = "The base domain name for the hosted zone"
+  type        = string
+  
 }

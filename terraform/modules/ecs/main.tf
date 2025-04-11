@@ -34,7 +34,7 @@ resource "aws_ecs_cluster_capacity_providers" "ecs-capacity_provider" {
 
 //ECS Task definition
 resource "aws_ecs_task_definition" "ecs-task-definition" {
-  family = "ecs-task-definition"
+  family = "${var.project_name}-ecs-task-definition"
   network_mode          = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   execution_role_arn = data.aws_iam_role.ecs_execution_role.arn
@@ -96,5 +96,7 @@ resource "aws_ecs_service" "ecs-service" {
     assign_public_ip = true    
 
   }
+
+  # depends_on = [aws_lb_listener.app_listener]
 
 }

@@ -32,11 +32,11 @@ variable "private_subnets" {
 }
 
 
-variable "enable_nat_gateway" {
-  description = "to create NAT Gateway(s) for private subnet internet access"
-  type        = bool
+# variable "enable_nat_gateway" {
+#   description = "to create NAT Gateway(s) for private subnet internet access"
+#   type        = bool
 
-}
+# }
 variable "tags" {
   description = "to Map tags to apply to resources"
   type        = map(string)

@@ -1,5 +1,28 @@
 # Application Load Balancer 
+# resource "aws_acm_certificate" "cert" {
+#   domain_name       = var.domain_name
+#   validation_method = "DNS"
 
+
+# }
+
+# resource "aws_route53_record" "cert_validation" {
+#   name    = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_name
+#   type    = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_type
+#   zone_id = var.route53_zone_id
+#   records = [tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_value]
+#   ttl     = 60
+# }
+
+# resource "aws_acm_certificate_validation" "cert_validation" {
+#   certificate_arn         = aws_acm_certificate.cert.arn
+#   validation_record_fqdns = [aws_route53_record.cert_validation.fqdn]
+# }
+
+# data "aws_acm_certificate" "issued" {
+#   domain   = var.domain_name
+#   statuses = ["ISSUED"]
+# }
 resource "aws_alb" "alb_main" {
   name               =  var.alb_name 
   load_balancer_type = "application"
@@ -32,34 +55,48 @@ resource "aws_alb_target_group" "tg_app" {
 }
 
 # HTTP Listener: Redirects to HTTPS #
-resource "aws_lb_listener" "listener_http" {
-  load_balancer_arn = aws_lb.alb_main.arn
+# resource "aws_lb_listener" "listener_http" {
+#   load_balancer_arn = aws_alb.alb_main.arn
+#   port              = 80
+#   protocol          = "HTTP"
+
+#   default_action {
+#     type = "redirect"
+#     redirect {
+#       port        = "443"
+#       protocol    = "HTTPS"
+#       status_code = "HTTP_301"
+#     }
+#   }
+# }
+
+
+resource "aws_lb_listener" "listener_http2" {
+  load_balancer_arn = aws_alb.alb_main.arn
   port              = 80
   protocol          = "HTTP"
 
   default_action {
-    type = "redirect"
-    redirect {
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-    }
+    type             = "forward"
+    target_group_arn = aws_alb_target_group.tg_app.arn
   }
 }
 
 # HTTPS Listener: Forwards traffic to Target Group #
-resource "aws_alb_listener" "listener_https" {
-  load_balancer_arn = aws_lb.alb_main.arn
-  port              = 443
-  protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = var.certificate_arn
+# resource "aws_alb_listener" "listener_https" {
+#   load_balancer_arn = aws_alb.alb_main.arn
+#   port              = 443
+#   protocol          = "HTTPS"
+#   ssl_policy        = "ELBSecurityPolicy-2016-08"
+#   certificate_arn = data.aws_acm_certificate.issued.arn
 
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.tg_app.arn
-  }
-}
+  
+
+#   default_action {
+#     type             = "forward"
+#     target_group_arn = aws_alb_target_group.tg_app.arn
+#   }
+# }
 
 resource "aws_security_group" "alb_sg" {
   name        = var.alb_name
@@ -88,3 +125,9 @@ resource "aws_security_group" "alb_sg" {
   }
 
 }
+
+# resource "aws_lb_target_group_attachment" "ecs-tg-group-attachment-aza" {
+#   target_group_arn = aws_alb_target_group.tg_app.arn
+#   target_id        = "10.0.104.4"
+#   port             = 3000
+# }
