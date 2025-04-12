@@ -23,7 +23,7 @@
 #   domain   = var.domain_name
 #   statuses = ["ISSUED"]
 # }
-resource "aws_alb" "alb_main" {
+resource "aws_lb" "alb_main" {
   name               =  var.alb_name 
   load_balancer_type = "application"
   internal           = false
@@ -34,7 +34,7 @@ resource "aws_alb" "alb_main" {
 
 # Target Group for the application 
 
-resource "aws_alb_target_group" "tg_app" {
+resource "aws_lb_target_group" "tg_app" {
   name        = "mvp-app-tg"
   port        = 80
   protocol    = "HTTP"
@@ -72,13 +72,13 @@ resource "aws_alb_target_group" "tg_app" {
 
 
 resource "aws_lb_listener" "listener_http2" {
-  load_balancer_arn = aws_alb.alb_main.arn
+  load_balancer_arn = aws_lb.alb_main.arn
   port              = 80
   protocol          = "HTTP"
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_alb_target_group.tg_app.arn
+    target_group_arn = aws_lb_target_group.tg_app.arn
   }
 }
 

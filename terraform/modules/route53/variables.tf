@@ -9,6 +9,11 @@ variable "alb_dns_name" {
   type        = string
 }
 
+variable "alb_zone_id" {
+  description = "The hosted zone ID for the ALB"
+  type        = string
+  
+}
 variable "record_type" {
   description = "The type of DNS record to create (A or CNAME)"
   type        = string

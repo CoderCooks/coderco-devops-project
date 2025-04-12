@@ -37,7 +37,7 @@ variable "operating_system_family" {
 variable "cpu_architecture" {
   description = "The CPU architecture"
   type        = string
-  default     = "X86_64"
+  default     = "ARM64"
 }
 
 variable "subnets" {
