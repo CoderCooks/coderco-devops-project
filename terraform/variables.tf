@@ -50,7 +50,7 @@ variable "alb_name" {
 variable "domain_name" {
   description = "The base domain name for the hosted zone"
   type        = string
-  
+
 }
 
 variable "certificate_arn" {

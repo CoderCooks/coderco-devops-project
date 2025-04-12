@@ -12,12 +12,12 @@ variable "alb_dns_name" {
 variable "alb_zone_id" {
   description = "The hosted zone ID for the ALB"
   type        = string
-  
+
 }
 variable "record_type" {
   description = "The type of DNS record to create (A or CNAME)"
   type        = string
-  default     = "A"  
+  default     = "A"
   validation {
     condition     = contains(["A", "CNAME"], var.record_type)
     error_message = "The record_type must be either 'A' or 'CNAME'"
@@ -27,7 +27,7 @@ variable "record_type" {
 variable "record_name" {
   description = "The name of the DNS record to create"
   type        = string
-  
+
 }
 # variable "alb_zone_id" {
 #   description = "The hosted zone ID for the ALB"
@@ -38,5 +38,5 @@ variable "record_name" {
 variable "domain_name" {
   description = "The base domain name for the hosted zone"
   type        = string
-  
+
 }

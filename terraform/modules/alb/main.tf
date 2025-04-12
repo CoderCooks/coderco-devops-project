@@ -24,12 +24,12 @@
 #   statuses = ["ISSUED"]
 # }
 resource "aws_lb" "alb_main" {
-  name               =  var.alb_name 
+  name               = var.alb_name
   load_balancer_type = "application"
   internal           = false
   subnets            = var.subnet_ids
   security_groups    = [aws_security_group.alb_sg.id]
- 
+
 }
 
 # Target Group for the application 
@@ -90,7 +90,7 @@ resource "aws_lb_listener" "listener_http2" {
 #   ssl_policy        = "ELBSecurityPolicy-2016-08"
 #   certificate_arn = data.aws_acm_certificate.issued.arn
 
-  
+
 
 #   default_action {
 #     type             = "forward"

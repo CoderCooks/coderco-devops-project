@@ -18,7 +18,7 @@ resource "aws_cloudwatch_log_group" "ecs_log_group" {
 //ECS Cluster
 resource "aws_ecs_cluster" "ecs-cluster" {
   name = "${var.project_name}-ecs-cluster"
-  
+
 }
 
 //ECS Cluster capacity providers
@@ -37,23 +37,23 @@ resource "aws_ecs_cluster_capacity_providers" "ecs-capacity_provider" {
 
 //ECS Task definition
 resource "aws_ecs_task_definition" "ecs-task-definition" {
-  family = "${var.project_name}-ecs-task-definition"
-  network_mode          = "awsvpc"
+  family                   = "${var.project_name}-ecs-task-definition"
+  network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  execution_role_arn = data.aws_iam_role.ecs_execution_role.arn
+  execution_role_arn       = data.aws_iam_role.ecs_execution_role.arn
   cpu                      = var.ecs_task_cpu
   memory                   = var.ecs_task_memory
-   //TODO: Ensure ecr repositry uri is being referenced correctly
-   container_definitions = templatefile("${path.module}/container_definition.json.tpl", {
+  //TODO: Ensure ecr repositry uri is being referenced correctly
+  container_definitions = templatefile("${path.module}/container_definition.json.tpl", {
     container_name = "${var.project_name}-container-image"
     image_url      = data.aws_ecr_repository.ecr.repository_url
-    cpu                      = var.ecs_task_cpu
-    memory                   = var.ecs_task_memory
+    cpu            = var.ecs_task_cpu
+    memory         = var.ecs_task_memory
   })
- runtime_platform {
-  operating_system_family = var.operating_system_family
-  cpu_architecture        = var.cpu_architecture
-}
+  runtime_platform {
+    operating_system_family = var.operating_system_family
+    cpu_architecture        = var.cpu_architecture
+  }
 
 }
 
@@ -64,11 +64,11 @@ resource "aws_security_group" "ecs_security_group" {
   vpc_id      = var.vpc_id
 
   ingress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    security_groups = [var.alb_security_group] 
-    description      = "Allow all traffic from ALB security group"
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    security_groups = [var.alb_security_group]
+    description     = "Allow all traffic from ALB security group"
   }
   egress {
     from_port   = 0
@@ -81,20 +81,20 @@ resource "aws_security_group" "ecs_security_group" {
 
 //ECS Service
 resource "aws_ecs_service" "ecs-service" {
-  name            = "ecs-service"
-  cluster         = aws_ecs_cluster.ecs-cluster.id
-  launch_type = "FARGATE"
-  task_definition = aws_ecs_task_definition.ecs-task-definition.arn
-  desired_count   = 1
-  force_new_deployment = true    
-    load_balancer {
-    target_group_arn = var.target_group_arn  # Reference target group ARN from ALB module
-    container_name      = "${var.project_name}-container-image"
+  name                 = "ecs-service"
+  cluster              = aws_ecs_cluster.ecs-cluster.id
+  launch_type          = "FARGATE"
+  task_definition      = aws_ecs_task_definition.ecs-task-definition.arn
+  desired_count        = 1
+  force_new_deployment = true
+  load_balancer {
+    target_group_arn = var.target_group_arn # Reference target group ARN from ALB module
+    container_name   = "${var.project_name}-container-image"
     container_port   = 3000
   }
 
   network_configuration {
-    subnets = var.subnets
+    subnets         = var.subnets
     security_groups = [aws_security_group.ecs_security_group.id]
     # assign_public_ip = true    
 
@@ -112,11 +112,11 @@ resource "aws_security_group" "endpoint_sg" {
   vpc_id      = var.vpc_id
 
   ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
     security_groups = [aws_security_group.ecs_security_group.id] # ECS task SG
-    description = "Allow HTTPS from ECS tasks"
+    description     = "Allow HTTPS from ECS tasks"
   }
 
   egress {
@@ -129,18 +129,18 @@ resource "aws_security_group" "endpoint_sg" {
 
 # ECR API endpoint
 resource "aws_vpc_endpoint" "ecr_api" {
-  vpc_id            = var.vpc_id
-  service_name      = "com.amazonaws.eu-west-2.ecr.api"
-  vpc_endpoint_type = "Interface"
-  subnet_ids        = var.subnets
+  vpc_id             = var.vpc_id
+  service_name       = "com.amazonaws.eu-west-2.ecr.api"
+  vpc_endpoint_type  = "Interface"
+  subnet_ids         = var.subnets
   security_group_ids = [aws_security_group.endpoint_sg.id]
 }
 
 # ECR DKR endpoint
 resource "aws_vpc_endpoint" "ecr_dkr" {
-  vpc_id            = var.vpc_id
-  service_name      = "com.amazonaws.eu-west-2.ecr.dkr"
-  vpc_endpoint_type = "Interface"
-  subnet_ids        = var.subnets
+  vpc_id             = var.vpc_id
+  service_name       = "com.amazonaws.eu-west-2.ecr.dkr"
+  vpc_endpoint_type  = "Interface"
+  subnet_ids         = var.subnets
   security_group_ids = [aws_security_group.endpoint_sg.id]
 }

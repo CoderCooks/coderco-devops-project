@@ -2,18 +2,18 @@ variable "project_name" {
   description = "The name of the project"
   type        = string
   default     = "codercooks"
-  
+
 }
 
 variable "ecr_repo_name" {
-    description = "The name of the ECR repository"
-    default = "coderco-app"
-    type = string
+  description = "The name of the ECR repository"
+  default     = "coderco-app"
+  type        = string
 }
 
 variable "allowed_cidr_blocks" {
-    description = "CIDR blocks allowed for the security groups"
-    default = ["0.0.0.0/0"]
+  description = "CIDR blocks allowed for the security groups"
+  default     = ["0.0.0.0/0"]
 }
 
 
@@ -41,25 +41,25 @@ variable "cpu_architecture" {
 }
 
 variable "subnets" {
-    description = "The subnets for the Load balancer"
-    type        = list(string)
-  
+  description = "The subnets for the Load balancer"
+  type        = list(string)
+
 }
 
 variable "alb_security_group" {
   description = "The security group of the Load Balancer"
   type        = string
-  
+
 }
 
 variable "target_group_arn" {
   description = "The target group for the load balancer and ECS Service"
   type        = string
-  
+
 }
 
 variable "vpc_id" {
   description = "The VPC for the ECS Security group"
   type        = string
-  
+
 }
