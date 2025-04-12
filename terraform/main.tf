@@ -37,5 +37,6 @@ module "route53" {
   record_name  = var.record_name
   alb_dns_name = module.alb.alb_dns_name
   domain_name = var.domain_name
+  alb_zone_id      = module.alb.alb_zone_id
 
 }

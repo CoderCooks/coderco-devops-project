@@ -11,7 +11,10 @@ data "aws_iam_role" "ecs_execution_role" {
   name = "ecsTaskExecutionRole"
 }
 
-
+resource "aws_cloudwatch_log_group" "ecs_log_group" {
+  name              = "/ecs/${var.project_name}-container-image"
+  retention_in_days = 7
+}
 //ECS Cluster
 resource "aws_ecs_cluster" "ecs-cluster" {
   name = "${var.project_name}-ecs-cluster"
@@ -93,10 +96,51 @@ resource "aws_ecs_service" "ecs-service" {
   network_configuration {
     subnets = var.subnets
     security_groups = [aws_security_group.ecs_security_group.id]
-    assign_public_ip = true    
+    # assign_public_ip = true    
 
   }
 
   # depends_on = [aws_lb_listener.app_listener]
 
+}
+
+
+
+resource "aws_security_group" "endpoint_sg" {
+  name        = "vpc-endpoint-sg"
+  description = "Security group for VPC endpoints like ECR and SSM"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    security_groups = [aws_security_group.ecs_security_group.id] # ECS task SG
+    description = "Allow HTTPS from ECS tasks"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# ECR API endpoint
+resource "aws_vpc_endpoint" "ecr_api" {
+  vpc_id            = var.vpc_id
+  service_name      = "com.amazonaws.eu-west-2.ecr.api"
+  vpc_endpoint_type = "Interface"
+  subnet_ids        = var.subnets
+  security_group_ids = [aws_security_group.endpoint_sg.id]
+}
+
+# ECR DKR endpoint
+resource "aws_vpc_endpoint" "ecr_dkr" {
+  vpc_id            = var.vpc_id
+  service_name      = "com.amazonaws.eu-west-2.ecr.dkr"
+  vpc_endpoint_type = "Interface"
+  subnet_ids        = var.subnets
+  security_group_ids = [aws_security_group.endpoint_sg.id]
 }
