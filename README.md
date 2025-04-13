@@ -67,7 +67,7 @@ This project provisions the entire infrastructure stack for a scalable, containe
 
 ## ⚙️ Setup Instructions
 
-```bash
+````bash
 # 1. Clone the Repository
 git clone https://github.com/your-org/your-repo.git
 cd your-repo
@@ -78,14 +78,6 @@ cd your-repo
 # domain_name = "domain.com"
 # ecr_repo_name = "myecrrepo"
 # subnet_ids = ["subnet-abc", "subnet-def"]
-
-# 3. Deploy Infrastructure
-cd terraform
-terraform init
-terraform plan -var-file="terraform.tfvars"
-terraform apply -var-file="terraform.tfvars"
-```
-
 ---
 
 ## 📸 Architectural Diagram
@@ -106,7 +98,7 @@ docker build -t coderco-frontend .
 
 # 🚀 Run the Container
 docker run -p 3000:3000 coderco-frontend
-```
+````
 
 Access the app at [http://localhost:3000](http://localhost:3000)
 
@@ -218,7 +210,6 @@ Always:
 - 📊 Add CloudWatch or Datadog monitoring
 - 🔁 Staging/production environment split
 - 🚦 Add blue/green deployments
-- 🔐 Secrets manager integration
 
 ---
 
