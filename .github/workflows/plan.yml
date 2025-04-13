@@ -1,12 +1,7 @@
 name: Terraform Deploy to AWS
 
 on:
-  push:
-    paths:
-      - 'terraform/**'
-  pull_request:
-    paths:
-      - 'terraform/**'
+
   workflow_dispatch:
 
 env:
