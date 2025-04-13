@@ -1,18 +1,23 @@
 name: Terraform Destroy workflow
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Terraform Apply"]
+    types:
+      - completed
 
 env:
   AWS_REGION: us-east-1
 
 jobs:
   destroy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Destroy Terraform infrastructure
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
-        # We keep Terraform files in the terraform directory.
         working-directory: ./terraform
 
     steps:
