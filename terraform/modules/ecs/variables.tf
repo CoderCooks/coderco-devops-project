@@ -14,7 +14,7 @@ variable "ecr_repo_name" {
 variable "allowed_cidr_blocks" {
   description = "CIDR blocks allowed for the security groups"
   default     = ["0.0.0.0/0"]
-  type = list(string) 
+  type        = list(string)
 }
 
 
