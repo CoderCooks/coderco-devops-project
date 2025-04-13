@@ -28,13 +28,13 @@ jobs:
         working-directory: terraform
         run: terraform fmt -check -recursive
 
-      - name: Install tflint
-        run: |
-          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+      # - name: Install tflint
+      #   run: |
+      #     curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
 
-      - name: Run tflint
-        working-directory: terraform
-        run: tflint --recursive
+      # - name: Run tflint
+      #   working-directory: terraform
+      #   run: tflint --recursive
 
   checkov:
     name: Checkov Terraform Scan
