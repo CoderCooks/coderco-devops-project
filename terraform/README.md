@@ -1,83 +1,139 @@
-#ReadMe File for showcasing documentation around terraform workflow
-# 🌱 Terraform Workflow
+## 🛠️ Terraform Infrastructure Setup & Workflow
 
-This project uses [Terraform] to manage AWS infrastructure as code.
+This project uses [Terraform](https://www.terraform.io/) to provision and manage AWS infrastructure as code, using modular configurations and remote state for collaboration and consistency.
 
 ---
 
-## 🚀 Getting Started
+### 📁 Project Structure
 
-### 1. Initialize Terraform
+```
+terraform/
+├── main.tf                  # Entry point: references modules and providers
+├── terraform.tfvars         # Project-specific variables
+├── backend.tf               # Remote backend configuration (e.g., S3 + DynamoDB)
+├── variables.tf             # Storing Variables
+├── backend.tf               # Defines useful outputs attributes to be displayed when the resources are created
+├── modules/                 # Reusable infrastructure modules (alb, ecs, route53, etc.)
+```
+
+---
+
+### 🌐 Remote Backend & State Management
+
+The project uses an S3 bucket to store the Terraform state file remotely and a DynamoDB table to enable state locking. This ensures:
+
+- Safe, collaborative workflows
+- Consistent infrastructure changes across environments
+- Protection against simultaneous applies
+
+Backend is configured via `backend.tf`, typically like:
+
+```hcl
+terraform {
+  backend "s3" {
+    bucket         = "your-terraform-state-bucket"
+    key            = "env/project/terraform.tfstate"
+    region         = "eu-west-2"
+    dynamodb_table = "terraform-locks"
+  }
+}
+```
+
+---
+
+### 🚀 Common Terraform Commands
+
+#### ✅ `terraform init`
+
+Initialises the Terraform working directory.
+
+**It will:**
+
+- Download required providers (e.g., AWS)
+- Set up the remote backend (S3)
+- Initialise any modules
+
+**Run this:**
+
+- The first time you start the project
+- After cloning the repo
+- After modifying backend or provider versions
 
 ```bash
 terraform init
-
-
-## ✅ What is `terraform init`?
-
-`terraform init` is used to:
-
-1. **Download provider plugins** (e.g. AWS, Azure)
-2. **Set up the backend** (for remote state in S3, etc.)
-3. **Initialize modules** (if your config uses modules)
+```
 
 ---
 
-## 🧪 When to Run
+#### 🧪 `terraform plan`
 
-- First time using a Terraform project
-- After cloning a Terraform repo
-- After changing provider versions or backends
+Generates an execution plan and shows which resources will be:
 
----
+- 🟢 Created
+- 🟡 Updated
+- 🔴 Destroyed
 
+**Why use it:**
 
-## terraform plan
+- To preview infrastructure changes
+- To double-check before applying
+- To avoid unintended consequences
 
-✅ What it's used for:
-Preview changes before they are made
-
-See which resources will be:
-
-🟢 Created
-
-🟡 Updated
-
-🔴 Destroyed
-
--Double-check your changes before applying them
-
--Avoid surprises or mistakes in your infrastructure
-
-💡 When to use it:
--After making any changes to your .tf files
--Before running terraform apply
----
-
-## terraform apply
-
-`terraform apply` is used to:
-
-1. **Create new resources (e.g., ECS instances, S3 buckets)
-2. **Update existing resources
-3. **Delete resources that were removed from the code
+```bash
+terraform plan -var-file="terraform.tfvars"
+```
 
 ---
 
-## 🧪 When to Run
+#### ⚙️ `terraform apply`
 
-- After running terraform init (to set up the project)
-- After running terraform plan (to preview the changes)
-- When you're ready to deploy or update infrastructure
--After making changes to .tf files and reviewing them
+Applies the planned changes to provision or update resources in AWS.
 
+**It will:**
 
-## ✅ What is `terraform destroy`?
-Use this to tear down everything managed by Terraform. Useful for:
+- Create new infrastructure
+- Modify existing resources
+- Remove anything deleted from code
 
-Cleaning up after testing
+```bash
+terraform apply -var-file="terraform.tfvars"
+```
 
-Releasing unused environments
+---
 
-⚠️ Always double-check the plan before confirming!
+#### 🧹 `terraform destroy`
 
+Destroys everything Terraform manages.
+
+**Use it for:**
+
+- Cleaning up test environments
+- Tearing down unused infrastructure
+
+**⚠️ Warning:** Always double-check the plan before confirming.
+
+```bash
+terraform destroy -var-file="terraform.tfvars"
+```
+
+---
+
+### 🧠 Troubleshooting & Gotchas
+
+| Issue                             | Solution                                                                  |
+| --------------------------------- | ------------------------------------------------------------------------- |
+| `Error acquiring state lock`      | Another user/process is applying; wait or manually clear lock in DynamoDB |
+| Changes not reflected             | Run `terraform refresh` to sync state                                     |
+| Backend errors                    | Check credentials, S3 bucket policy, and region config                    |
+| Plan shows everything to recreate | Make sure remote state was correctly initialised (`terraform init`)       |
+
+---
+
+### 📌 Best Practices Followed
+
+- Remote state stored in S3
+- State locking with DynamoDB
+- Modular design with reusable components
+- CI/CD workflows handle `plan` and `apply` securely
+
+---
