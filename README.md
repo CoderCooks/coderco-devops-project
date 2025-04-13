@@ -1,4 +1,3 @@
-
 # 🌐 CoderCooks AWS Infrastructure
 
 A production-ready cloud infrastructure setup that deploys a Node.js web application to AWS using ECS Fargate, ECR, ACM, ALB, Route 53, and Terraform — all managed through GitHub Actions CI/CD.
@@ -134,6 +133,7 @@ terraform destroy -var-file="terraform.tfvars"
 🧩 Modules include `alb`, `ecs`, `route53`.
 
 Troubleshooting:
+
 - 🔒 State lock? → Wait or clear DynamoDB lock
 - 🔄 Plan recreating all? → Try `terraform refresh`
 
@@ -143,12 +143,12 @@ Troubleshooting:
 
 **GitHub Actions workflows:**
 
-| Workflow     | Purpose                               | Trigger      |
-|--------------|----------------------------------------|--------------|
-| `ci.yml`     | Build and push Docker image to ECR     | Manual       |
-| `plan.yml`   | Run `terraform plan`                   | Manual       |
-| `apply.yml`  | Apply infrastructure changes           | Manual       |
-| `destroy.yml`| Destroy all infrastructure             | Manual       |
+| Workflow      | Purpose                            | Trigger |
+| ------------- | ---------------------------------- | ------- |
+| `ci.yml`      | Build and push Docker image to ECR | Manual  |
+| `plan.yml`    | Run `terraform plan`               | Manual  |
+| `apply.yml`   | Apply infrastructure changes       | Manual  |
+| `destroy.yml` | Destroy all infrastructure         | Manual  |
 
 🔐 Uses `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` secrets for authentication.
 
@@ -170,9 +170,11 @@ Trigger via GitHub Actions tab → select workflow → "Run".
 ### 💾 Committing & Pull Requests
 
 Use meaningful prefixes:
+
 - `feat`, `fix`, `docs`, `style`, `chore`, etc.
 
 Always:
+
 - Rebase before pushing
 - Create PRs to `dev`
 - Use squash & merge
@@ -205,7 +207,7 @@ Always:
 
 ## 🎥 Application Showcase
 
-![Application Demo](public/demo.gif)
+![Application Demo](public/app-demo.gif)
 
 > A running demo of the deployed application.
 
@@ -225,4 +227,3 @@ Always:
 **Yahya** — DevOps Engineer passionate about cloud infrastructure, automation, and CI/CD.
 
 ---
-
