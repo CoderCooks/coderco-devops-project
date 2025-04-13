@@ -1,8 +1,8 @@
-name: Terraform Deploy to AWS
+name: Terraform Apply
 
-on:
 
-  workflow_dispatch:
+on: workflow_dispatch
+
 
 env:
   AWS_REGION: eu-west-2
