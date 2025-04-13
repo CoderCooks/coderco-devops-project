@@ -1,19 +1,19 @@
 # This module creates an Application Load Balancer (ALB) with a target group and listeners.
 data "aws_acm_certificate" "issued" {
-  domain   = var.domain_name
-  statuses = ["ISSUED"]
-  most_recent  = true
+  domain      = var.domain_name
+  statuses    = ["ISSUED"]
+  most_recent = true
 
 }
 
 # AWS Application Load Balancer (ALB) #
 resource "aws_lb" "alb_main" {
-  name               =  var.alb_name 
+  name               = var.alb_name
   load_balancer_type = "application"
   internal           = false
   subnets            = var.subnet_ids
   security_groups    = [aws_security_group.alb_sg.id]
- 
+
 }
 
 # Target Group for the application 
@@ -62,7 +62,7 @@ resource "aws_alb_listener" "listener_https" {
   # certificate_arn = aws_acm_certificate.cert.arn
   certificate_arn = data.aws_acm_certificate.issued.arn
 
-  
+
 
   default_action {
     type             = "forward"
