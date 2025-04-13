@@ -1,3 +1,4 @@
+#Required variables for all modules
 variable "environment" {
   description = "Deployment environment"
   type        = string
@@ -23,15 +24,6 @@ variable "private_subnets" {
   type        = list(string)
 }
 
-# variable "enable_nat_gateway" {
-#   description = "Enable NAT Gateway(s) for private subnet internet access"
-#   type        = bool
-# }
-
-# variable "enable_vpn_gateway" {
-#   description = "Enable a VPN Gateway"
-#   type        = bool
-# }
 
 variable "tags" {
   description = "Map of tags to apply to resources"

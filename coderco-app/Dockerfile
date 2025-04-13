@@ -1,3 +1,6 @@
+#Dockerfile for CoderCo App
+#This Dockerfile is used to build a Docker image for the CoderCo application.
+
 #First stage
 
 FROM node:23-alpine3.20 AS builder

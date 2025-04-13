@@ -1,5 +1,5 @@
 //TODO: Create Terraform Infrastructure for ECS --> cluster, task definition, service etc)
-
+// Terrafor
 
 //Reference existing ECR repository
 data "aws_ecr_repository" "ecr" {
@@ -106,6 +106,7 @@ resource "aws_ecs_service" "ecs-service" {
 
 
 
+# VPC Endpoints for ECR/ECS
 resource "aws_security_group" "endpoint_sg" {
   name        = "vpc-endpoint-sg"
   description = "Security group for VPC endpoints like ECR and SSM"

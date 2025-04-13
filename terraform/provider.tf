@@ -1,6 +1,5 @@
 // This file defines the provider configuration for AWS
 // and specifies the required provider version.
-
 terraform {
   required_providers {
     aws = {

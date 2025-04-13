@@ -12,6 +12,8 @@ data "aws_route53_zone" "existing" {
 #   ttl     = 300
 #   records        = [var.alb_dns_name]
 # }
+
+# Route 53 record for the ALB
 resource "aws_route53_record" "app_alias_record" {
   count   = var.record_type == "A" ? 1 : 0
   zone_id = data.aws_route53_zone.existing.zone_id

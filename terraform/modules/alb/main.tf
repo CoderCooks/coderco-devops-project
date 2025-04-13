@@ -1,3 +1,4 @@
+# This module creates an Application Load Balancer (ALB) with a target group and listeners.
 data "aws_acm_certificate" "issued" {
   domain   = var.domain_name
   statuses = ["ISSUED"]
@@ -5,6 +6,7 @@ data "aws_acm_certificate" "issued" {
 
 }
 
+# AWS Application Load Balancer (ALB) #
 resource "aws_lb" "alb_main" {
   name               =  var.alb_name 
   load_balancer_type = "application"
@@ -15,7 +17,6 @@ resource "aws_lb" "alb_main" {
 }
 
 # Target Group for the application 
-
 resource "aws_lb_target_group" "tg_app" {
   name        = "mvp-app-tg"
   port        = 80
@@ -69,6 +70,7 @@ resource "aws_alb_listener" "listener_https" {
   }
 }
 
+# Security Group for ALB #
 resource "aws_security_group" "alb_sg" {
   name        = var.alb_name
   description = "Security group for ALB"

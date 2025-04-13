@@ -1,4 +1,5 @@
 //Variables for the Route53 module
+
 # variable "domain_name" {
 #   description = "The base domain name for the hosted zone"
 #   type        = string
