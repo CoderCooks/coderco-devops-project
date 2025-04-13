@@ -50,7 +50,7 @@ variable "vpc_id" {
 variable "alb_name" {
   description = "The alb name"
   type        = string
-  
+
 }
 
 

@@ -1,12 +1,12 @@
 # Application Load Balancer 
 
 resource "aws_alb" "alb_main" {
-  name               =  var.alb_name 
+  name               = var.alb_name
   load_balancer_type = "application"
   internal           = false
   subnets            = var.subnet_ids
   security_groups    = [aws_security_group.alb_sg.id]
- 
+
 }
 
 # Target Group for the application 

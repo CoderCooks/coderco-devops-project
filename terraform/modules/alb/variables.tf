@@ -1,7 +1,7 @@
 variable "alb_name" {
   description = "The alb name"
   type        = string
-  
+
 }
 
 # VPC ID where the ALB and target group will be created
@@ -44,5 +44,5 @@ variable "tags" {
   description = "Tags to apply to the ALB and target group"
   type        = map(string)
   default     = {}
-  
+
 }
