@@ -10,11 +10,11 @@ module "networking" {
 }
 
 module "alb" {
-  source          = "./modules/alb"
-  subnet_ids      = module.networking.public_subnets
-  alb_name        = var.alb_name
-  vpc_id          = module.networking.vpc_id
-  domain_name     = var.domain_name
+  source      = "./modules/alb"
+  subnet_ids  = module.networking.public_subnets
+  alb_name    = var.alb_name
+  vpc_id      = module.networking.vpc_id
+  domain_name = var.domain_name
 }
 module "ecs" {
   source             = "./modules/ecs"

@@ -11,9 +11,9 @@ tags = {
 }
 
 // ALB module values
-alb_name        = "my-alb"
+alb_name = "my-alb"
 # certificate_arn = "value"
-domain_name     = "tm-yahya.com"
+domain_name = "tm-yahya.com"
 
 
 // Route53 module values
