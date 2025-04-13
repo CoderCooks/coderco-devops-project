@@ -7,33 +7,14 @@ module "networking" {
   availability_zones = var.availability_zones
   private_subnets    = var.private_subnets
   public_subnets     = var.public_subnets
-  tags               = var.tags
 }
 
 module "alb" {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   source          = "./modules/alb"
   subnet_ids      = module.networking.public_subnets
   alb_name        = var.alb_name
   vpc_id          = module.networking.vpc_id
-  certificate_arn = var.certificate_arn
   domain_name     = var.domain_name
-
 }
 module "ecs" {
   source             = "./modules/ecs"
@@ -41,8 +22,6 @@ module "ecs" {
   vpc_id             = module.networking.vpc_id
   alb_security_group = module.alb.alb_security_group
   target_group_arn   = module.alb.target_group_arn
-
-
 }
 
 

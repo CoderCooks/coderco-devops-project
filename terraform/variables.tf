@@ -45,10 +45,10 @@ variable "domain_name" {
 
 }
 
-variable "certificate_arn" {
-  type        = string
-  description = "ARN of the ACM certificate to use for HTTPS"
-}
+# variable "certificate_arn" {
+#   type        = string
+#   description = "ARN of the ACM certificate to use for HTTPS"
+# }
 variable "record_name" {
   description = "The base domain name for the hosted zone"
   type        = string

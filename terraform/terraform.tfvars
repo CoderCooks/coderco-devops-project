@@ -12,7 +12,7 @@ tags = {
 
 // ALB module values
 alb_name        = "my-alb"
-certificate_arn = "value"
+# certificate_arn = "value"
 domain_name     = "tm-yahya.com"
 
 

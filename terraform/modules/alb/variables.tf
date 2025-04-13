@@ -31,15 +31,6 @@ variable "subnet_ids" {
 #   description = "List of security group IDs for the ALB"
 # }
 
-# ACM Certificate ARN for HTTPS listener
-
-variable "certificate_arn" {
-  type        = string
-  description = "ARN of the ACM certificate to use for HTTPS"
-}
-
-# Health check path for the target group
-
 variable "health_check_path" {
   type        = string
   default     = "/"
