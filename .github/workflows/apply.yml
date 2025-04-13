@@ -1,18 +1,17 @@
 name: Terraform Apply
 
-# on:
-#   workflow_run:
-#     workflows: ["Terraform Plan"]
-#     types:
-#       - completed
-
-on: workflow_dispatch
+on:
+  workflow_run:
+    workflows: ["Terraform Plan"]
+    types:
+      - completed
 
 env:
   AWS_REGION: eu-west-2
 
 jobs:
   terraform-apply:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Terraform Apply
     runs-on: ubuntu-latest
 
@@ -36,12 +35,6 @@ jobs:
         working-directory: terraform
         run: terraform init
 
-      # - name: Download Terraform Plan
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: tfplan
-      #     path: terraform/
       - name: Terraform Apply
         working-directory: terraform
         run: terraform apply -auto-approve
-        # run: terraform apply -auto-approve tfplan
