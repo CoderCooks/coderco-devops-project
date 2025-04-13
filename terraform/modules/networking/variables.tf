@@ -37,11 +37,11 @@ variable "private_subnets" {
 #   type        = bool
 
 # }
-variable "tags" {
-  description = "to Map tags to apply to resources"
-  type        = map(string)
+# variable "tags" {
+#   description = "to Map tags to apply to resources"
+#   type        = map(string)
 
-}
+# }
 # variable "enable_vpn_gateway" {
 #   description = "to create a VPN Gateway"
 #   type        = bool
